@@ -22,6 +22,7 @@ const config = {
   },
   output: {
     path: path.resolve(__dirname, "dist"),
+    publicPath: "auto",
     filename: "[name].bundle.js",
     clean: true,
   },
