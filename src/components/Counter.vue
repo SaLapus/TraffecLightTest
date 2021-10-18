@@ -1,5 +1,5 @@
 <template>
-  <div>{{ offset }}</div>
+  <div class="counter">{{ offset }}</div>
 </template>
 
 <script lang="ts">
@@ -11,5 +11,12 @@ export default class Counter extends Vue {
 }
 </script>
 
-<style>
+<style lang="sass">
+.counter
+  font-size: 30px
+  font-weight: 100
+
+  margin:
+    top: 10px
+    bottom: 20px
 </style>

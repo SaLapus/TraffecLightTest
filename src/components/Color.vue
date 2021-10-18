@@ -36,10 +36,20 @@ export default class Color extends Vue {
 </script>
 
 <style lang="sass">
+@use "sass:math"
+
+$size: 300px
+
 .ligth
-  height: 100px
-  width: 100px
-  border-radius: 50px
+  height: $size
+  width: $size
+  border-radius: math.div($size, 2)
+
+  margin:
+    top: 10px
+    bottom: 10px
+    left: 10px
+    right: 10px
 
   &.active
     animation:
