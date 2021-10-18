@@ -15,15 +15,16 @@ function getSavedState(): ColorState {
   const prev = sessionStorage.getItem("prevColor");
   const current = sessionStorage.getItem("curColor");
 
-  const offsetStr = sessionStorage.getItem("offset");
-  const offset = offsetStr && parseInt(offsetStr, 10);
+  const offset = sessionStorage.getItem("offset");
 
-  if (prev && current && offset)
+  debugger
+
+  if (prev != undefined && current && offset)
     return {
       prev,
       current,
       offset: {
-        time: offset,
+        time: parseInt(offset, 10),
         checked: false,
       },
     };

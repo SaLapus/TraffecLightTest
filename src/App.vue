@@ -14,6 +14,7 @@
       <button class="clear" @click="clearState">Очистить состояние</button>
     </div>
     <div class="message"></div>
+    <div class="savedColor"></div>
   </div>
 </template>
 
@@ -95,12 +96,14 @@ export default class App extends Vue {
     sessionStorage.setItem("curColor", current);
     sessionStorage.setItem("offset", `${this.offset.time}`);
 
+    this.showSavedState();
     this.showMessage("Состояние сохранено");
   }
 
   clearState(): void {
     sessionStorage.clear();
 
+    this.showSavedState(true);
     this.showMessage("Состояние удалено");
   }
 
@@ -112,6 +115,22 @@ export default class App extends Vue {
 
       setTimeout(() => (msgPlace.textContent = ""), 5 * 1000);
     }
+  }
+
+  showSavedState(clear?: boolean): void {
+    const msgPlace = document.querySelector(".savedColor");
+
+    if (clear && msgPlace) {
+      msgPlace.textContent = "";
+      return;
+    }
+
+    const prev = sessionStorage.getItem("prevColor");
+    const current = sessionStorage.getItem("curColor");
+    const offset = sessionStorage.getItem("offset");
+
+    if (msgPlace)
+      msgPlace.textContent = `Предыдущее значение: ${prev}\nТекущее значение: ${current}\nЗначение таймера: ${offset}`;
   }
 }
 </script>
