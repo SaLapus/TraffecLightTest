@@ -17,8 +17,6 @@ function getSavedState(): ColorState {
 
   const offset = sessionStorage.getItem("offset");
 
-  debugger
-
   if (prev != undefined && current && offset)
     return {
       prev,
@@ -36,8 +34,6 @@ function getSavedState(): ColorState {
 
 function setSavedState(colors: Color[]): ColorState {
   const preState = getSavedState();
-
-  console.log("SET STATE");
 
   const color = colors.find((color) => color.name === preState.current);
 
