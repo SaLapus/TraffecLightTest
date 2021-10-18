@@ -9,7 +9,11 @@
       />
     </div>
     <Counter :offset="offset.time" />
-    <button @click="saveState">Сохранить состояние</button>
+    <div class="controlState">
+      <button class="saving" @click="saveState">Сохранить состояние</button>
+      <button class="clear" @click="clearState">Очистить состояние</button>
+    </div>
+    <div class="message"></div>
   </div>
 </template>
 
@@ -89,15 +93,64 @@ export default class App extends Vue {
 
     sessionStorage.setItem("prevColor", prev);
     sessionStorage.setItem("curColor", current);
+    sessionStorage.setItem("offset", `${this.offset.time}`);
+
+    this.showMessage("Состояние сохранено");
+  }
+
+  clearState(): void {
+    sessionStorage.clear();
+
+    this.showMessage("Состояние удалено");
+  }
+
+  showMessage(msg: string): void {
+    const msgPlace = document.querySelector(".message");
+
+    if (msgPlace) {
+      msgPlace.textContent = msg;
+
+      setTimeout(() => (msgPlace.textContent = ""), 5 * 1000);
+    }
   }
 }
 </script>
 
 <style lang="sass">
+$width: 700px
+
 #app
   font-family: Avenir, Helvetica, Arial, sans-serif
   -webkit-font-smoothing: antialiased
   -moz-osx-font-smoothing: grayscale
   text-align: center
   color: #2c3e50
+
+  .colors
+    margin:
+      top: 10px
+      bottom: 20px
+
+  .controlState
+    margin:
+      top: 10px
+      bottom: 10px
+
+    button
+      font:
+        size: 15px
+        weight: 100
+
+  .message
+    font:
+      size: 25px
+      weight: 100
+
+@media screen and (max-width: $width)
+  .colors
+    display: inline-block
+
+@media screen and (min-width: $width)
+  .colors
+    display: inline-flex
 </style>
