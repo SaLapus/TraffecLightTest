@@ -5,10 +5,6 @@ import getSavedState from "./setSavedState";
 
 Vue.use(Vuex);
 
-export interface State {
-  color: string;
-}
-
 const colors = [
   { name: "green", offset: 15 },
   { name: "yellow", offset: 3 },
@@ -23,6 +19,11 @@ export default new Vuex.Store({
   },
   getters: {
     getColorOffset: (state) => (colorName: string) => {
+      if (state.color.offset && !state.color.offset.checked) {
+        state.color.offset.checked = !state.color.offset.checked;
+        return state.color.offset.time;
+      }
+
       return state.colors.find((color) => color.name === colorName)?.offset;
     },
     nextColor: (state) => {

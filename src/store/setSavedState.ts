@@ -1,6 +1,10 @@
 interface ColorState {
   prev: string;
   current: string;
+  offset?: {
+    time: number;
+    checked: boolean;
+  };
 }
 
 interface Color {
@@ -11,7 +15,18 @@ function getSavedState(): ColorState {
   const prev = sessionStorage.getItem("prevColor");
   const current = sessionStorage.getItem("curColor");
 
-  if (prev && current) return { prev, current };
+  const offsetStr = sessionStorage.getItem("offset");
+  const offset = offsetStr && parseInt(offsetStr, 10);
+
+  if (prev && current && offset)
+    return {
+      prev,
+      current,
+      offset: {
+        time: offset,
+        checked: false,
+      },
+    };
   else {
     const path = location.pathname;
     return { prev: "", current: path.substr(1) };
@@ -20,6 +35,8 @@ function getSavedState(): ColorState {
 
 function setSavedState(colors: Color[]): ColorState {
   const preState = getSavedState();
+
+  console.log("SET STATE");
 
   const color = colors.find((color) => color.name === preState.current);
 
